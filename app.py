@@ -27,19 +27,10 @@ def init():
                 state = graph_with_mongo.get_state(config)
                 interrupts = getattr(state, "interrupts", ())
 
-                # Resume any pending interrupt before accepting a new user turn.
-            
+                
                 if interrupts:
-                    payload = getattr(interrupts[0], "value", {}) or {}
-                    prompt = payload.get("query") or payload.get("message") or "Human input required"
-                    resume_input = input(f"{prompt}\n> ")
-                    for chunk in graph_with_mongo.stream(
-                        Command(resume={"data": resume_input}),
-                        config=config,
-                        stream_mode="values",
-                    ):
-                        if "messages" in chunk:
-                            chunk["messages"][-1].pretty_print()
+
+                    print("Your request is being handled by support. Please wait...")
                     continue
 
                 user_input = input("> ")
